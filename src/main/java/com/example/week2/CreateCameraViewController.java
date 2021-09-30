@@ -42,7 +42,9 @@ public class CreateCameraViewController implements Initializable {
         List<String> cameraBrands = Arrays.asList("Canon","Nikon","Sony");
         makeComboBox.getItems().addAll(cameraBrands);
 
-        //update the price slider
+        msgLabel.setText("");
+
+        //configure the price slider
         priceSlider.setMin(300);
         priceSlider.setMax(3000);
         priceSlider.setValue(500);
@@ -51,6 +53,22 @@ public class CreateCameraViewController implements Initializable {
         // using a Lamda expression
         priceSlider.valueProperty().addListener(((observableValue, oldValue, newValue) -> {
             priceLabel.setText((String.format("$%.2f", newValue)));
+        }));
+
+        //configure the spinner to work with Integers in the range of 5-75
+        //the arguments are min, max, default and increment
+        SpinnerValueFactory<Integer> spinnerValueFactory =
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(5,75,18,5);
+        megapixelsSpinner.setValueFactory(spinnerValueFactory);
+        megapixelsSpinner.setEditable(true);
+        TextField spinnerTextField = megapixelsSpinner.getEditor();
+        spinnerTextField.textProperty().addListener(((observableValue, oldValue, newValue) -> {
+            try{
+                Integer.parseInt(newValue);
+            } catch(Exception e)
+            {
+                spinnerTextField.setText(oldValue);
+            }
         }));
     }
 
@@ -63,14 +81,13 @@ public class CreateCameraViewController implements Initializable {
             String model = this.modelTextField.getText();
             ArrayList<String> lenses = new ArrayList<>();
             lenses.addAll(Arrays.asList("70-200 F2.8", "15-50 F1.8", "100-400 F4.5"));
-//            int mp = this.megapixelsSpinner.getValue();
-            int mp = 36;
-//            double price = Double.parseDouble(this.priceTextField.getText());
+            int mp = megapixelsSpinner.getValue();
+            double price = priceSlider.getValue();
             boolean digital = this.digitalCheckBox.isSelected();
             boolean mirrorless = this.mirrorlessCheckBox.isSelected();
 
-//            Camera camera = new Camera(make,model,lenses,mp,price,digital,mirrorless);
-//            msgLabel.setText("Created camera: " + camera);
+            Camera camera = new Camera(make,model,lenses,mp,price,digital,mirrorless);
+            msgLabel.setText("Created camera: " + camera);
         }catch (Exception e)
         {
             this.msgLabel.setText(e.getMessage());
