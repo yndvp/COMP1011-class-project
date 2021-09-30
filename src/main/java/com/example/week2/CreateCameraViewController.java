@@ -2,11 +2,7 @@ package com.example.week2;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,8 +21,6 @@ public class CreateCameraViewController implements Initializable {
     @FXML
     private Spinner<Integer> megapixelsSpinner;
 
-    @FXML
-    private TextField priceTextField;
 
     @FXML
     private CheckBox digitalCheckBox;
@@ -35,12 +29,29 @@ public class CreateCameraViewController implements Initializable {
     private CheckBox mirrorlessCheckBox;
 
     @FXML
+    private Slider priceSlider;
+
+    @FXML
+    private Label priceLabel;
+
+    @FXML
     private Label msgLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<String> cameraBrands = Arrays.asList("Canon","Nikon","Sony");
         makeComboBox.getItems().addAll(cameraBrands);
+
+        //update the price slider
+        priceSlider.setMin(300);
+        priceSlider.setMax(3000);
+        priceSlider.setValue(500);
+        priceLabel.setText((String.format("$%.2f", priceSlider.getValue())));
+
+        // using a Lamda expression
+        priceSlider.valueProperty().addListener(((observableValue, oldValue, newValue) -> {
+            priceLabel.setText((String.format("$%.2f", newValue)));
+        }));
     }
 
     @FXML
@@ -54,12 +65,12 @@ public class CreateCameraViewController implements Initializable {
             lenses.addAll(Arrays.asList("70-200 F2.8", "15-50 F1.8", "100-400 F4.5"));
 //            int mp = this.megapixelsSpinner.getValue();
             int mp = 36;
-            double price = Double.parseDouble(this.priceTextField.getText());
+//            double price = Double.parseDouble(this.priceTextField.getText());
             boolean digital = this.digitalCheckBox.isSelected();
             boolean mirrorless = this.mirrorlessCheckBox.isSelected();
 
-            Camera camera = new Camera(make,model,lenses,mp,price,digital,mirrorless);
-            msgLabel.setText("Created camera: " + camera);
+//            Camera camera = new Camera(make,model,lenses,mp,price,digital,mirrorless);
+//            msgLabel.setText("Created camera: " + camera);
         }catch (Exception e)
         {
             this.msgLabel.setText(e.getMessage());

@@ -4,12 +4,14 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -19,10 +21,10 @@
          <center>
             <VBox alignment="TOP_CENTER" spacing="20.0">
                <children>
-                  <GridPane>
+                  <GridPane maxWidth="500.0" prefHeight="338.0" prefWidth="500.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.39996337890625" minWidth="10.0" prefWidth="169.19998168945312" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="331.6000061035156" minWidth="10.0" prefWidth="330.8000183105469" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -39,9 +41,14 @@
                         <ComboBox fx:id="makeComboBox" prefWidth="150.0" GridPane.columnIndex="1" />
                         <TextField fx:id="modelTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Spinner fx:id="megapixelsSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="priceTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <CheckBox fx:id="digitalCheckBox" mnemonicParsing="false" text="Digital" GridPane.rowIndex="4" />
                         <CheckBox fx:id="mirrorlessCheckBox" mnemonicParsing="false" text="Mirrorless" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <HBox prefHeight="15.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <Slider fx:id="priceSlider" prefHeight="30.0" prefWidth="214.0" />
+                              <Label fx:id="priceLabel" prefHeight="31.0" prefWidth="80.0" text="Label" />
+                           </children>
+                        </HBox>
                      </children>
                   </GridPane>
                   <Button mnemonicParsing="false" onAction="#submitButton" text="Submit" />
@@ -50,7 +57,7 @@
             </VBox>
          </center>
          <top>
-            <Label stylesheets="@styles.css" text="Creaet A Camera Object" BorderPane.alignment="CENTER" />
+            <Label id="header" text="Creaet A Camera Object" BorderPane.alignment="CENTER" />
          </top>
       </BorderPane>
    </children>
