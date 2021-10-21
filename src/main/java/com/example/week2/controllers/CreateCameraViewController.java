@@ -1,9 +1,14 @@
-package com.example.week2;
+package com.example.week2.controllers;
 
+import com.example.week2.Utilities.DBUtility;
+import com.example.week2.Utilities.SceneChanger;
+import com.example.week2.models.Camera;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,18 +85,25 @@ public class CreateCameraViewController implements Initializable {
             String make = this.makeComboBox.getSelectionModel().getSelectedItem();
             String model = this.modelTextField.getText();
             ArrayList<String> lenses = new ArrayList<>();
-            lenses.addAll(Arrays.asList("70-200 F2.8", "15-50 F1.8", "100-400 F4.5"));
+//            lenses.addAll(Arrays.asList("70-200 F2.8", "15-50 F1.8", "100-400 F4.5"));
             int mp = megapixelsSpinner.getValue();
             double price = priceSlider.getValue();
             boolean digital = this.digitalCheckBox.isSelected();
             boolean mirrorless = this.mirrorlessCheckBox.isSelected();
 
             Camera camera = new Camera(make,model,mp,price,digital,mirrorless);
+            camera.setCameraId(DBUtility.insertCameraDB(camera));
+
             msgLabel.setText("Created camera: " + camera);
         }catch (Exception e)
         {
             this.msgLabel.setText(e.getMessage());
         }
+    }
+
+    @FXML
+    private void viewAllCamera(ActionEvent event) throws IOException {
+        SceneChanger.changeScenes(event, "table-view.fxml", "All Camera's");
     }
 }
 

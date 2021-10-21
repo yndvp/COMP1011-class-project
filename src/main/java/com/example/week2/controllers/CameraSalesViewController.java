@@ -1,4 +1,4 @@
-package com.example.week2;
+package com.example.week2.controllers;
 
 import com.example.week2.Utilities.DBUtility;
 import javafx.fxml.FXML;
